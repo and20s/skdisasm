@@ -1,0 +1,18 @@
+name: Build S3K ROM
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar Lua 5.3
+        run: sudo apt-get update && sudo apt-get install -y lua5.3
+      - name: Compilar
+        run: lua5.3 buildS3Complete.lua
+      - name: Subir resultado
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonic3k-build
+          path: |
+            sonic3k.bin
+            sonic3k.lst
